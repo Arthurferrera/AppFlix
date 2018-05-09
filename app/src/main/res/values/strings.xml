@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppFlix</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="title_activity_visualizar">VisualizarActivity</string>
+
+    <string name="sinopse_teste">"Eu sou extremamente ambicioso. Eu sou ambicioso de uma forma que ninguém pode conceber. Porque dinheiro, conforto, estabilidade, luxo, pra mim é pouco, eu quero mais. Eu quero tudo que eu puder levar dessa vida" por Eduardo Marinho</string>
+</resources>
