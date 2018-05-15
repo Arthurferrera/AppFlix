@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -18,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ProducaoAdapter adapter;
 
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ProducaoAdapter(this);
 
         list_view.setAdapter(adapter);
+
+        list_view.setOnItemClickListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 String json = "";
 
-                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
+                String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionar.php";
+//                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
                 json = HttpConnection.get(url);
 
                 return json;
@@ -98,5 +103,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.execute();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Producao item = adapter.getItem(i);
+
+        Intent intent = new Intent(this, VisualizarActivity.class);
+
+        intent.putExtra("idProducao", item.getId());
+
+        startActivity(intent);
     }
 }

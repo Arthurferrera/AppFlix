@@ -58,7 +58,8 @@ public class CadastroActivity extends AppCompatActivity {
         link = txt_link.getText().toString();
         avaliacao = Double.valueOf(rt_avaliacao.getRating());
 
-        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
+        String url = "http://10.0.2.2/INF3T20181/APIFilmes/inserir.php?";
+//        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
         url += "titulo="+titulo+"&sinopse="+sinopse+"&link="+link+"&avaliacao="+avaliacao;
         new InserirProducaoAPI(url, this).execute();
 
