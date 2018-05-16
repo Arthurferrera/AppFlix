@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.net.URL;
 
 import br.com.senaijandira.room.api.InserirProducaoAPI;
 
@@ -58,8 +59,10 @@ public class CadastroActivity extends AppCompatActivity {
         link = txt_link.getText().toString();
         avaliacao = Double.valueOf(rt_avaliacao.getRating());
 
-        String url = "http://10.0.2.2/INF3T20181/APIFilmes/inserir.php?";
-//        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
+//        URL de Quarta-Feira
+        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
+//        URL de Terça-Feira
+//        String url = "http://10.0.2.2/INF3T20181/APIFilmes/inserir.php?";
         url += "titulo="+titulo+"&sinopse="+sinopse+"&link="+link+"&avaliacao="+avaliacao;
         new InserirProducaoAPI(url, this).execute();
 

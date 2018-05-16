@@ -1,6 +1,7 @@
 package br.com.senaijandira.room;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
+
 public class VisualizarActivity extends AppCompatActivity {
 
     ImageView img_producao;
@@ -24,6 +27,7 @@ public class VisualizarActivity extends AppCompatActivity {
 
     Integer idProducao;
 
+    String avaliacao, link, sinopse, titulo;
 
 
     @Override
@@ -48,7 +52,10 @@ public class VisualizarActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        final String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionarUm.php?id="+idProducao;
+//        URL de Quarta-Feira
+        final String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionarUm.php?id="+idProducao;
+//        URL de Terça-Feira
+//        final String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionarUm.php?id="+idProducao;
 
         new AsyncTask<Void, Void, Void>(){
 
@@ -70,10 +77,10 @@ public class VisualizarActivity extends AppCompatActivity {
 
                 try {
                     JSONObject objeto = new JSONObject(retorno);
-                    String titulo = objeto.getString("titulo");
-                    String sinopse = objeto.getString("sinopse");
-                    String link = objeto.getString("link");
-                    String avaliacao = String.valueOf(objeto.getString("avaliacao"));
+                    titulo = objeto.getString("titulo");
+                    sinopse = objeto.getString("sinopse");
+                    link = objeto.getString("link");
+                    avaliacao = String.valueOf(objeto.getDouble("avaliacao"));
 
                     rt_avaliacao.setRating(Float.parseFloat(avaliacao));
                     txt_sinopse.setText(sinopse);
@@ -89,5 +96,10 @@ public class VisualizarActivity extends AppCompatActivity {
     }
 
     public void assistirProducao(View view) {
+
+        Uri url = Uri.parse(link);
+        Intent intent = new Intent(Intent.ACTION_VIEW, url);
+        startActivity(intent);
+
     }
 }

@@ -18,6 +18,7 @@ import android.widget.GridView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -65,8 +66,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             protected String doInBackground(Void... voids) {
                 String json = "";
 
-                String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionar.php";
-//                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
+//                URL de Quarta-Feira
+                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
+//                URL de Terça-Feira
+//                String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionar.php";
                 json = HttpConnection.get(url);
 
                 return json;
