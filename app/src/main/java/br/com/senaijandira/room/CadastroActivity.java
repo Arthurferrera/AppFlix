@@ -1,6 +1,7 @@
 package br.com.senaijandira.room;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,9 @@ public class CadastroActivity extends AppCompatActivity {
 
     int COD_GALERIA = 1;
 
+    StringBuffer nomeImage = new StringBuffer();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,15 +62,16 @@ public class CadastroActivity extends AppCompatActivity {
         sinopse = txt_sinopse.getText().toString();
         link = txt_link.getText().toString();
         avaliacao = Double.valueOf(rt_avaliacao.getRating());
+        String caminhoFoto = "img/"+nomeImage.toString();
 
-//        URL de Quarta-Feira
-        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
+//       URL de Quarta-Feira
+//        String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/inserir.php?";
 //        URL de Terça-Feira
-//        String url = "http://10.0.2.2/INF3T20181/APIFilmes/inserir.php?";
-        url += "titulo="+titulo+"&sinopse="+sinopse+"&link="+link+"&avaliacao="+avaliacao;
+        String url = "http://10.0.2.2/INF3T20181/APIFilmes/inserir.php?";
+        url += "titulo="+titulo+"&sinopse="+sinopse+"&link="+link+"&avaliacao="+avaliacao+"&imagem="+caminhoFoto;
         new InserirProducaoAPI(url, this).execute();
-
-        finish();
+//
+//        finish();
 
     }
 
@@ -101,6 +106,9 @@ public class CadastroActivity extends AppCompatActivity {
 
                     //colocando a fotinha
                     img_producao.setImageBitmap(foto);
+
+                    nomeImage.setLength(0); //limpando o atringBuffer
+                    new UploadImageAPI(this, nomeImage).execute(foto);
 
                 }catch (Exception ex){
                     ex.printStackTrace();

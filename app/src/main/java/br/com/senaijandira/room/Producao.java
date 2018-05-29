@@ -11,6 +11,7 @@ public class Producao {
     private String sinopse;
     private String link;
     private Double avaliacao;
+    private String imagem;
 
     public int getId() {
         return id;
@@ -51,4 +52,8 @@ public class Producao {
     public void setAvaliacao(Double avaliacao) {
         this.avaliacao = avaliacao;
     }
+
+    public String getImagem() { return imagem; }
+
+    public void setImagem(String imagem) { this.imagem = imagem; }
 }

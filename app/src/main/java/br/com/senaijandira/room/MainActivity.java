@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 String json = "";
 
 //                URL de Quarta-Feira
-                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
+//                String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionar.php";
 //                URL de Terça-Feira
-//                String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionar.php";
+                String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionar.php";
                 json = HttpConnection.get(url);
 
                 return json;
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             prod.setSinopse(producaoJson.getString("sinopse"));
                             prod.setLink(producaoJson.getString("link"));
                             prod.setAvaliacao(producaoJson.getDouble("avaliacao"));
+                            prod.setImagem(producaoJson.getString("imagem"));
 
                             lstProducoes.add(prod);
                         }

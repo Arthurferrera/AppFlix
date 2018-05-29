@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -36,13 +38,17 @@ public class ProducaoAdapter extends ArrayAdapter<Producao> {
 
         Producao item = getItem(position);
 
-//        ImageView  img_item = v.findViewById(R.id.img_item);
+        ImageView  img_item = v.findViewById(R.id.img_item);
         TextView txt_titulo_item = v.findViewById(R.id.txt_titulo_item);
 
 //        TODO: salvar e setar foto
-//        img_item.setImageBitmap(item.getFoto);
         txt_titulo_item.setText(item.getTitulo());
+        String caminho_imagem = item.getImagem();
 
+
+//        picasso
+        String linkimagem = "http://10.0.2.2/INF3T20181/APIFilmes/"+caminho_imagem;
+        Picasso.with(getContext()).load(linkimagem).into(img_item);
         return v;
     }
 }

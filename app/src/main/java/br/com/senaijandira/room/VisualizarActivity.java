@@ -1,23 +1,34 @@
 package br.com.senaijandira.room;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
+
+import br.com.senaijandira.room.api.ExcluirProducaoAPI;
 
 public class VisualizarActivity extends AppCompatActivity {
 
@@ -26,7 +37,7 @@ public class VisualizarActivity extends AppCompatActivity {
     TextView txt_sinopse;
 
     Integer idProducao;
-
+    Context ctx = this;
     String avaliacao, link, sinopse, titulo;
 
 
@@ -53,9 +64,9 @@ public class VisualizarActivity extends AppCompatActivity {
         super.onResume();
 
 //        URL de Quarta-Feira
-        final String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionarUm.php?id="+idProducao;
+//        final String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/selecionarUm.php?id="+idProducao;
 //        URL de Terça-Feira
-//        final String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionarUm.php?id="+idProducao;
+        final String url = "http://10.0.2.2/INF3T20181/APIFilmes/selecionarUm.php?id="+idProducao;
 
         new AsyncTask<Void, Void, Void>(){
 
@@ -81,18 +92,18 @@ public class VisualizarActivity extends AppCompatActivity {
                     sinopse = objeto.getString("sinopse");
                     link = objeto.getString("link");
                     avaliacao = String.valueOf(objeto.getDouble("avaliacao"));
+                    String foto = objeto.getString("imagem");
+
+                    String linkimagem = "http://10.0.2.2/INF3T20181/APIFilmes/"+foto;
+                    Picasso.with(ctx).load(linkimagem).into(img_producao);
 
                     rt_avaliacao.setRating(Float.parseFloat(avaliacao));
                     txt_sinopse.setText(sinopse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }.execute();
-
-
     }
 
     public void assistirProducao(View view) {
@@ -101,5 +112,47 @@ public class VisualizarActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW, url);
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_excluir){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Excluir");
+            builder.setMessage("Tem certeza que deseja Excluir?");
+            final Activity activity = this;
+            builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+//                    URL de Quarta-Feira
+//                    final String url = "http://10.0.2.2/inf3T20181/TurmaA/Arthur%20Ferreira/APIFilmes/delete.php?id="+idProducao;
+//                    URL de Terça-Feira
+                    final String url = "http://10.0.2.2/INF3T20181/APIFilmes/delete.php?id="+idProducao;
+                    new ExcluirProducaoAPI(url, activity).execute();
+
+//                    Toast.makeText(activity, "Excluido com sucesso!", Toast.LENGTH_SHORT).show();
+//                    finish();
+                }
+            });
+
+            builder.setNegativeButton("NÃO", null);
+            builder.create().show();
+
+            return true;
+        } else if(id == R.id.action_editar){
+            Intent intent = new Intent(this, CadastroActivity.class);
+            intent.putExtra("id",idProducao);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
